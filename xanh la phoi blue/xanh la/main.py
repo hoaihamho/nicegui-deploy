@@ -15,14 +15,13 @@ ui.add_head_html('''
         box-shadow: 0 0 20px rgba(34,197,94,0.25);
         backdrop-filter: blur(12px);
         transition: all 0.4s ease-in-out;
-        margin-left: auto;
-        margin-right: auto;
     }
     .green-card:hover {
         box-shadow: 0 0 30px rgba(34,197,94,0.45);
         transform: translateY(-4px);
     }
     .hero-title {
+        font-size: 6rem;
         font-weight: 900;
         background: linear-gradient(90deg, #16a34a, #22c55e, #4ade80, #08c97f, #04d499);
         background-size: 400% 400%;
@@ -32,16 +31,40 @@ ui.add_head_html('''
         text-shadow: 2px 2px 4px rgba(0,0,0,0.7),
                      0 0 12px rgba(34,197,94,0.4),
                      0 0 20px rgba(132,204,22,0.4);
-        text-align: center;
     }
-    /* Responsive cho Hero Title */
-    @media (min-width: 3840px) { .hero-title { font-size: 10rem; } }  /* 4K */
-    @media (min-width: 2560px) and (max-width: 3839px) { .hero-title { font-size: 8rem; } }  /* 2K */
-    @media (min-width: 1440px) and (max-width: 2559px) { .hero-title { font-size: 6rem; } }  /* Laptop lớn */
-    @media (min-width: 1024px) and (max-width: 1439px) { .hero-title { font-size: 5rem; } }  /* Laptop thường */
-    @media (min-width: 640px) and (max-width: 1023px) { .hero-title { font-size: 4rem; } }  /* Tablet */
-    @media (max-width: 639px) { .hero-title { font-size: 2.5rem; } }  /* Điện thoại */
+    /* Màn hình 2K (≥ 2560px) */
+    @media (min-width: 2560px) {
+        .hero-title {
+            font-size: 8rem;
+        }
+    }
 
+    /* Màn hình 4K (≥ 3840px) */
+    @media (min-width: 3840px) {
+        .hero-title {
+            font-size: 10rem;
+        }
+    }
+    /* Laptop */
+    @media (max-width: 1440px) {
+        .hero-title {
+            font-size: 5rem;
+        }
+    }
+
+    /* Tablet */
+    @media (max-width: 1024px) {
+        .hero-title {
+            font-size: 4rem;
+        }
+    }
+
+    /* Điện thoại */
+    @media (max-width: 640px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+    }
     @keyframes gradientFlow {
         0% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
@@ -56,16 +79,18 @@ ui.add_head_html('''
 
 # ======= Hero Section =======
 with ui.column().classes('w-full items-center justify-center text-center text-white mt-2'):
-    ui.label('SmartMacroAI').classes('hero-title mb-4 font-extrabold drop-shadow-lg')
+    ui.label('SmartMacroAI').classes(
+        'hero-title mb-4 text-9xl font-extrabold drop-shadow-lg'
+    )
 
-# ======= Video Section =======
+# ======= Video Section (dùng chung style Features) =======
 with ui.column().classes('w-full items-center mt-2'):
     with ui.card().classes('green-card'):
-        # Tiêu đề + nút
-        with ui.row().classes("w-full flex-col md:flex-row justify-between items-center mb-6 space-y-4 md:space-y-0"):
+        # Hàng ngang: Tiêu đề bên trái, nút bên phải
+        with ui.row().classes("w-full justify-between items-center mb-6"):
             ui.label("🎥 SmartMacroAI – Tự động hoá thông minh với AI").classes(
-                "text-xl md:text-3xl font-bold bg-gradient-to-r from-green-300 to-lime-400 "
-                "bg-clip-text text-transparent drop-shadow-lg text-center md:text-left"
+                "text-3xl font-bold bg-gradient-to-r from-green-300 to-lime-400 "
+                "bg-clip-text text-transparent drop-shadow-lg"
             )
             ui.link("⬇️ Tải ngay", "https://github.com/smartmacroai/SmartMacroAI") \
                 .props('target=_blank') \
@@ -76,26 +101,26 @@ with ui.column().classes('w-full items-center mt-2'):
                     "transition-all duration-300"
                 )
 
-        # Video responsive
-        with ui.element("div").classes("w-full max-w-4xl aspect-video mx-auto"):
-            ui.element("iframe") \
-                .props('src=https://www.youtube.com/embed/IHlVkJaOUCg frameborder=0 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen') \
-                .classes("w-full h-full rounded-2xl shadow-xl")
+        # Video YouTube bên dưới
+        ui.element('iframe') \
+            .props('src=https://www.youtube.com/embed/IHlVkJaOUCg') \
+            .props('width=100% style="aspect-ratio:16/9;" frameborder=0 allow=accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share allowfullscreen') \
+            .classes('rounded-2xl shadow-xl')
 
 # ======= Features Section =======
 with ui.column().classes('w-full items-center mt-20'):
     with ui.card().classes('green-card text-center'):
         ui.label('🚀 SmartMacroAI – Giải pháp tự động hóa thông minh cho Windows 10/11 64-bit') \
             .classes(
-                'text-2xl md:text-4xl font-extrabold mb-8 '
+                'text-4xl font-extrabold mb-8 '
                 'bg-gradient-to-r from-green-300 to-lime-400 '
-                'bg-clip-text text-transparent drop-shadow-lg text-center'
+                'bg-clip-text text-transparent drop-shadow-lg'
             )
 
         ui.label(
             'Trải nghiệm tương lai của sự tiện lợi: kéo & thả để hoàn thành mọi tác vụ nhanh chóng, '
             'ngay cả với người không rành công nghệ cũng chỉ cần vài phút để làm quen.'
-        ).classes('text-base md:text-lg mb-10 text-gray-200 leading-relaxed')
+        ).classes('text-lg mb-10 text-gray-200 leading-relaxed')
 
         features = [
             ("⚡", "Dễ sử dụng, bỏ qua bước viết script phức tạp thường thấy ở phần mềm khác"),
@@ -109,23 +134,23 @@ with ui.column().classes('w-full items-center mt-20'):
         with ui.column().classes('items-start space-y-4 text-left mx-auto max-w-2xl'):
             for icon, text in features:
                 ui.label(f'{icon} {text}').classes(
-                    'text-base md:text-lg text-gray-100 transition duration-300 hover:text-green-400 hover:translate-x-1'
+                    'text-lg text-gray-100 transition duration-300 hover:text-green-400 hover:translate-x-1'
                 )
 
         ui.separator().classes('my-10 border-gray-700')
 
         ui.label('📌 Thông tin nhà phát triển:') \
             .classes(
-                'text-xl md:text-2xl font-bold mb-6 '
+                'text-2xl font-bold mb-6 '
                 'bg-gradient-to-r from-green-300 to-lime-400 '
-                'bg-clip-text text-transparent drop-shadow-lg text-center'
+                'bg-clip-text text-transparent drop-shadow-lg'
             )
 
-        ui.label('👤 Tên: Nguyễn Văn Đức').classes('text-white text-center')
-        ui.label('📧 Email: smartmacroai@gmail.com').classes('text-white text-center')
-        ui.label('📱 Số điện thoại/Zalo: 0985205375').classes('text-white text-center')
+        ui.label('👤 Tên: Nguyễn Văn Đức').classes('text-white')
+        ui.label('📧 Email: smartmacroai@gmail.com').classes('text-white')
+        ui.label('📱 Số điện thoại/Zalo: 0985205375').classes('text-white')
 
-        with ui.row().classes('justify-center mt-6 space-x-8 flex-wrap'):
+        with ui.row().classes('justify-center mt-6 space-x-8'):
             ui.link('🌐 Fanpage Facebook', 'https://www.facebook.com/smartmacroai') \
                 .props('target=_blank') \
                 .classes('text-green-300 hover:text-green-500 transition duration-300')
